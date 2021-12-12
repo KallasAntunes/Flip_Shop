@@ -20,7 +20,7 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   late Map laptop = {};
-  bool saved = false;
+  bool? saved;
 
   void checkIfIsSaved() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -111,40 +111,42 @@ class _DetailsState extends State<Details> {
                 ],
               ),
             ),
-      floatingActionButton: TextButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color(0xFFC70000)),
-          shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          padding: MaterialStateProperty.all(EdgeInsets.zero),
-        ),
-        onPressed: saved ? removeLaptop : saveLaptop,
-        child: Ink(
-          padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-          decoration: BoxDecoration(
-            gradient: saved
-                ? null
-                : LinearGradient(
-                    begin: Alignment.centerRight,
-                    end: Alignment(-0.8, 0),
-                    colors: [
-                      Color(0xFFEF043F),
-                      Color(0xFFC42271),
-                    ],
-                  ),
-            borderRadius: BorderRadius.all(Radius.circular(80.0)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(saved ? "Remover" : "Salvar", style: TextStyle(fontSize: 16)),
-              SizedBox(width: 4),
-              Icon(saved ? Icons.delete_outline : Icons.favorite_border, size: 23)
-            ],
-          ),
-        ),
-      ),
+      floatingActionButton: saved == null
+          ? null
+          : TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFFC70000)),
+                shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                padding: MaterialStateProperty.all(EdgeInsets.zero),
+              ),
+              onPressed: saved! ? removeLaptop : saveLaptop,
+              child: Ink(
+                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+                decoration: BoxDecoration(
+                  gradient: saved!
+                      ? null
+                      : LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment(-0.8, 0),
+                          colors: [
+                            Color(0xFFEF043F),
+                            Color(0xFFC42271),
+                          ],
+                        ),
+                  borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(saved! ? "Remover" : "Salvar", style: TextStyle(fontSize: 16)),
+                    SizedBox(width: 4),
+                    Icon(saved! ? Icons.delete_outline : Icons.favorite_border, size: 23)
+                  ],
+                ),
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
     );
   }
