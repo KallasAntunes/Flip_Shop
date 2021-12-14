@@ -28,10 +28,6 @@ class _LoginState extends State<Login> {
       _emailErrorMessage = "";
     });
 
-    //Remover depois
-    email = "kallas@gmail.com";
-    password = "senha1234";
-
     if (password.isEmpty) setState(() => _passwordErrorMessage = "Senha não pode ser vazia");
     if (email.isEmpty)
       setState(() => _emailErrorMessage = "E-mail não pode ser vazio");
